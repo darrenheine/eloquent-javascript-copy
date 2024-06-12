@@ -3,8 +3,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 function min(x, y) {
+  // returns x if it is equal or less than y
   if (x <= y) {
     return x;
+    // returns y if x is greater than y
   } else if (x > y) {
     return y;
   }
