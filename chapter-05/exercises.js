@@ -3,7 +3,7 @@
 // /////////////////////////////////////////////////////////////////////////////
 
 function flatten(arrays) {
-  return arrays.reduce((flat, current) => flat.concat(current), []);
+  return arrays.reduce((acc, current) => acc.concat(current), []);
 }
 
 // /////////////////////////////////////////////////////////////////////////////
@@ -21,12 +21,10 @@ function loop(start, test, update, body) {
 // /////////////////////////////////////////////////////////////////////////////
 
 function every(array, test) {
-  for (let element of array) {
-    if (!test(element)) {
-      return false;
-    }
-  }
-  return true;
+  // Map the array to a new array of boolean values based on the test function
+  let testResults = array.map((element) => test(element));
+  // Check if every element in the testResults array is true
+  return testResults.every((result) => result);
 }
 
 // /////////////////////////////////////////////////////////////////////////////
@@ -34,19 +32,27 @@ function every(array, test) {
 // /////////////////////////////////////////////////////////////////////////////
 
 function dominantDirection(text) {
+  // Initialize arrays to store characters with left-to-right and right-to-left directions
   let ltr = [];
   let rtl = [];
+
+  // Loop through each character in the text
   for (let i = 0; i < text.length; i++) {
+    // Get the script object for the current character
     let script = characterScript(text.charCodeAt(i));
 
+    // If the character has an associated script
     if (script !== null) {
+      // If the script direction is left-to-right, add it to the ltr array
       if (script.direction === "ltr") {
         ltr.push(script);
       } else {
+        // Otherwise, add it to the rtl array
         rtl.push(script);
       }
     }
   }
+  // Determine which direction has more characters and return the dominant direction
   if (ltr.length > rtl.length) {
     return "ltr";
   } else {
